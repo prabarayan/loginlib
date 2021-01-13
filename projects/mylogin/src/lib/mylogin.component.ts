@@ -31,18 +31,26 @@ export class MyloginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            // password: ['', Validators.required],
-            email: ['', Validators.compose([Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$'), Validators.minLength(1)])],
-            password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d]{8,}$')])],
-        });
+        if (this.userNameType == 'email') {
+            this.loginForm = this.formBuilder.group({
+                email: ['', Validators.compose([Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$'), Validators.minLength(1)])],
+                password: ['', Validators.compose([Validators.required])],
+            });
+        } else {
+
+            this.loginForm = this.formBuilder.group({
+                username: ['', Validators.required],
+                password: ['', Validators.compose([Validators.required])],
+            });
+        }
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         console.log(this.userNameType);
-        if(this.userNameType == 'email'){
+        if (this.userNameType == 'email') {
             this.emailCheck = true;
+        } else {
+            this.emailCheck = false;
         }
     }
 
@@ -56,21 +64,27 @@ export class MyloginComponent implements OnInit {
         //   this.alertService.clear();
 
         // stop here if form is invalid
+        console.log('done validation1', this.loginForm.invalid)
         if (this.loginForm.invalid) {
             return;
         }
-
+        console.log('done validation')
         this.loading = true;
-        this.myloginService.login(this.f.username.value, this.f.password.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    //   this.alertService.error(error);
-                    this.loading = false;
-                });
+        if (this.userNameType == 'email') {
+            this.router.navigate(['/welcome']);
+        } else {
+            this.router.navigate(['/login']);
+        }
+        // this.myloginService.login(this.f.username.value, this.f.password.value)
+        //     .pipe(first())
+        //     .subscribe(
+        //         data => {
+        //             this.router.navigate([this.returnUrl]);
+        //         },
+        //         error => {
+        //             //   this.alertService.error(error);
+        //             this.loading = false;
+        //         });
     }
 
 }

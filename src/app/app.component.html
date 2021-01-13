@@ -309,9 +309,11 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-
+<nav>
+  <ul style="list-style: none;">
+    <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    <li><a routerLink="/emaillogin" routerLinkActive="active">Email Login</a></li>
+  </ul>
+</nav>
 
 <router-outlet></router-outlet>
-<div style="width: 500px;"> 
-  <lib-mylogin [userNameType]="email"></lib-mylogin>
-</div>

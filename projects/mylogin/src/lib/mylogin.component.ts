@@ -35,7 +35,7 @@ export class MyloginComponent implements OnInit {
             username: ['', Validators.required],
             // password: ['', Validators.required],
             email: ['', Validators.compose([Validators.required, Validators.pattern('^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$'), Validators.minLength(1)])],
-            password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$'),Validators.minLength(8)])],
+            password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d]{8,}$')])],
         });
 
         // get return url from route parameters or default to '/'
